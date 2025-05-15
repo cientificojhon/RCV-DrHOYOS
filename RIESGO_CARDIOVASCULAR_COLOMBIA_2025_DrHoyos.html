@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>RIESGO CARDIOVASCULAR COLOMBIA 2025 DrHoyos</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    h2 { color: #0077b6; }
+    .section { margin-bottom: 20px; }
+    .checkbox-group { margin-left: 20px; }
+    button {
+      background-color: #0077b6;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover { background-color: #005f87; }
+    #resultado { font-weight: bold; margin-top: 20px; }
+  </style>
+</head>
+<body>
+
+  <h1>RIESGO CARDIOVASCULAR COLOMBIA 2025 DrHoyos</h1>
+
+  <div class="section">
+    <h2>PASO 1: Clasificación Automática</h2>
+    <div class="checkbox-group">
+      <label><input type="checkbox" class="paso1"> ECV aterosclerótica establecida</label><br>
+      <label><input type="checkbox" class="paso1"> ECV subclínica con criterios de muy alto riesgo</label><br>
+      <label><input type="checkbox" class="paso1"> Diabetes + daño de órgano blanco o >3 RCV</label><br>
+      <label><input type="checkbox" class="paso1"> Hipercolesterolemia familiar homocigota</label><br>
+      <label><input type="checkbox" class="paso1"> Hipercolesterolemia familiar heterocigota + RCV</label><br>
+      <label><input type="checkbox" class="paso1"> ERC TFG &lt;30 ml/min/1.73m²</label>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>PASO 2: Características de Alto Riesgo</h2>
+    <div class="checkbox-group">
+      <label><input type="checkbox" class="paso2"> ECV subclínica <50%</label><br>
+      <label><input type="checkbox" class="paso2"> Factores de riesgo muy elevados</label><br>
+      <label><input type="checkbox" class="paso2"> Diabetes sin daño pero con >10 años o RCV</label><br>
+      <label><input type="checkbox" class="paso2"> ≥3 factores de RCV</label><br>
+      <label><input type="checkbox" class="paso2"> Puntaje de calcio elevado</label><br>
+      <label><input type="checkbox" class="paso2"> Hipercolesterolemia familiar heterocigota</label><br>
+      <label><input type="checkbox" class="paso2"> Lipoproteína (a) elevada</label><br>
+      <label><input type="checkbox" class="paso2"> ERC TFG 30–60 ml/min/1.73m²</label>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>PASO 3: Factores que Potencian el Riesgo</h2>
+    <div class="checkbox-group">
+      <label><input type="checkbox" class="paso3"> Condiciones inflamatorias crónicas</label><br>
+      <label><input type="checkbox" class="paso3"> Condiciones específicas en la mujer</label><br>
+      <label><input type="checkbox" class="paso3"> Biomarcadores elevados</label><br>
+      <label><input type="checkbox" class="paso3"> Antecedentes familiares de ECV prematura</label><br>
+      <label><input type="checkbox" class="paso3"> Diabetes >10 años sin alto riesgo</label><br>
+      <label><input type="checkbox" class="paso3"> Índice tobillo/brazo &lt;0.9</label><br>
+      <label><input type="checkbox" class="paso3"> Determinantes sociales adversos</label>
+    </div>
+  </div>
+
+  <button onclick="calcularRiesgo()">Calcular Riesgo</button>
+
+  <div id="resultado"></div>
+
+  <script>
+    function contarSeleccionados(clase) {
+      return document.querySelectorAll('.' + clase + ':checked').length;
+    }
+
+    function calcularRiesgo() {
+      const paso1 = contarSeleccionados('paso1') > 0;
+      const paso2 = contarSeleccionados('paso2') > 0;
+      const paso3 = contarSeleccionados('paso3');
+
+      let resultado = "";
+
+      if (paso1) {
+        resultado = "Paciente de <strong>MUY ALTO RIESGO</strong> - Meta LDL < 55 mg/dl";
+      } else if (paso2) {
+        resultado = "Paciente de <strong>ALTO RIESGO</strong> - Meta LDL < 70 mg/dl";
+      } else if (paso3 >= 2) {
+        resultado = "Paciente de <strong>ALTO RIESGO</strong> (≥2 factores potenciadores) - Meta LDL < 70 mg/dl";
+      } else if (paso3 === 1) {
+        resultado = "Paciente de <strong>MODERADO RIESGO</strong> - Meta LDL < 100 mg/dl";
+      } else {
+        resultado = "Paciente de <strong>BAJO RIESGO</strong>. Evaluar con calculadora ASCVD.";
+      }
+
+      document.getElementById("resultado").innerHTML = resultado;
+    }
+  </script>
+
+</body>
+</html>
